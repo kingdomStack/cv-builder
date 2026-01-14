@@ -1,0 +1,5 @@
+﻿cv-builder/
+├── index.html          # Main HTML file
+├── style.css           # All CSS styles
+├── script.js           # All JavaScript functionality
+└── README.md           # Project documentation

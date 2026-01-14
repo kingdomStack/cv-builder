@@ -1,0 +1,3739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional CV Builder - Create Your Resume in Minutes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&family=Roboto:wght@300;400;500;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4F46E5;
+            --primary-dark: #4338CA;
+            --secondary: #06B6D4;
+            --accent: #10B981;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --success: #10B981;
+            --text-dark: #1F2937;
+            --text-medium: #6B7280;
+            --text-light: #9CA3AF;
+            --bg-white: #FFFFFF;
+            --bg-light: #F9FAFB;
+            --bg-gray: #F3F4F6;
+            --border: #E5E7EB;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            /* Elite template colors */
+            --elite-gold: #D4AF37;
+            --elite-dark: #1a1a2e;
+            --elite-charcoal: #2d2d44;
+            --elite-silver: #C0C0C0;
+            --bg-cream: #FFFEF9;
+            /* Mobile-specific */
+            --mobile-safe-area: env(safe-area-inset-bottom, 20px);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            max-width: 100vw;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            scroll-behavior: smooth;
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+            padding: 20px;
+        }
+
+        .welcome-screen.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .welcome-content {
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 40px;
+            width: 100%;
+        }
+
+        .welcome-content h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            line-height: 1.2;
+        }
+
+        .welcome-content p {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            margin-bottom: 40px;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+
+        .welcome-btn {
+            padding: clamp(14px, 4vw, 16px) clamp(32px, 8vw, 48px);
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            background: white;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            min-height: 60px;
+            width: 100%;
+            max-width: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-btn:active {
+            transform: scale(0.98);
+        }
+
+        .welcome-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Mobile floating action button */
+        .mobile-fab {
+            position: fixed;
+            bottom: calc(20px + var(--mobile-safe-area));
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .mobile-fab:active {
+            transform: scale(0.9);
+            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4);
+        }
+
+        .mobile-fab.active {
+            background: var(--danger);
+        }
+
+        /* Mobile bottom toolbar */
+        .mobile-toolbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: none;
+            justify-content: space-around;
+            align-items: center;
+            padding: 12px 20px calc(12px + var(--mobile-safe-area));
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            border-top: 1px solid var(--border);
+        }
+
+        .mobile-toolbar-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            color: var(--text-medium);
+            font-size: 0.75rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            min-width: 64px;
+        }
+
+        .mobile-toolbar-btn:active {
+            background: var(--bg-gray);
+            color: var(--primary);
+            transform: scale(0.95);
+        }
+
+        .mobile-toolbar-btn i {
+            font-size: 1.2rem;
+            margin-bottom: 2px;
+        }
+
+        .mobile-toolbar-btn.active {
+            color: var(--primary);
+            background: var(--bg-light);
+        }
+
+        /* Mobile tips overlay */
+        .mobile-tips {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .mobile-tips-content {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            animation: slideUp 0.3s ease;
+        }
+
+        .mobile-tips-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .mobile-tips-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        .mobile-tips-content p {
+            color: var(--text-medium);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .mobile-tips-close {
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .mobile-tips-close:active {
+            transform: scale(0.98);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Template Selection Screen */
+        .template-selection {
+            display: none;
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        .template-selection.active {
+            display: block;
+        }
+
+        .template-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .template-header h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .template-header p {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .template-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .template-card:active {
+            transform: scale(0.98);
+        }
+
+        .template-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .template-preview {
+            width: 100%;
+            height: 400px;
+            background: var(--bg-gray);
+            position: relative;
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        .template-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .template-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-popular {
+            background: var(--accent);
+            color: white;
+        }
+
+        .badge-modern {
+            background: var(--primary);
+            color: white;
+        }
+
+        .badge-professional {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .badge-elite {
+            background: var(--elite-gold);
+            color: white;
+        }
+
+        .template-info {
+            padding: 24px;
+        }
+
+        .template-info h3 {
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .template-info p {
+            color: var(--text-medium);
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .template-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .feature-tag {
+            padding: 4px 10px;
+            background: var(--bg-light);
+            border-radius: 6px;
+            font-size: clamp(0.7rem, 1.8vw, 0.8rem);
+            color: var(--text-medium);
+        }
+
+        .select-template-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 44px;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .select-template-btn:active {
+            transform: scale(0.98);
+            background: var(--primary-dark);
+        }
+
+        .select-template-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Main Editor */
+        .editor-container {
+            display: none;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .editor-container.active {
+            display: grid;
+            grid-template-columns: 320px 1fr 280px;
+            gap: 20px;
+        }
+
+        /* Header Bar */
+        .editor-header {
+            grid-column: 1 / -1;
+            background: white;
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-lg);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-left h2 {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            font-weight: 600;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            line-height: 1.3;
+        }
+
+        .header-left h2 i {
+            color: var(--primary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .progress-label {
+            font-size: clamp(0.75rem, 2vw, 0.85rem);
+            color: var(--text-medium);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .progress-bar {
+            width: 120px;
+            height: 8px;
+            background: var(--bg-gray);
+            border-radius: 4px;
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--success);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(0.75rem, 2vw, 0.85rem);
+            color: var(--text-medium);
+        }
+
+        .auto-save-badge {
+            background: var(--bg-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: clamp(0.65rem, 1.8vw, 0.75rem);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--success);
+            white-space: nowrap;
+        }
+
+        .undo-redo-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            height: fit-content;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+            position: sticky;
+            top: 20px;
+            box-shadow: var(--shadow-lg);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .sidebar h3 {
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            line-height: 1.3;
+        }
+
+        .sidebar h3 i {
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            line-height: 1.3;
+        }
+
+        .help-icon {
+            color: var(--text-light);
+            cursor: help;
+            font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            transition: all 0.2s ease;
+            min-height: 44px;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .btn {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            min-height: 44px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-gray);
+            color: var(--text-dark);
+        }
+
+        .btn-secondary:hover {
+            background: #E5E7EB;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #0DA271;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #DC2626;
+        }
+
+        .btn-block {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 24px 0;
+        }
+
+        /* CV Preview */
+        .cv-preview {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow-xl);
+            min-height: calc(100vh - 40px);
+            position: relative;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .cv-paper {
+            max-width: 210mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: var(--shadow);
+            border-radius: 8px;
+            transform-origin: top center;
+        }
+
+        /* Template Styles */
+        .template-classic .cv-header {
+            text-align: center;
+            padding: 40px 40px 30px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .template-classic .cv-name {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .template-classic .cv-title {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: var(--primary);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .template-classic .cv-contact {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            color: var(--text-medium);
+        }
+
+        .template-classic .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .template-classic .cv-body {
+            padding: 40px;
+        }
+
+        .cv-section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary);
+            line-height: 1.3;
+        }
+
+        .section-content {
+            color: var(--text-medium);
+            line-height: 1.7;
+        }
+
+        /* Modern Template */
+        .template-modern {
+            display: grid;
+            grid-template-columns: 35% 65%;
+        }
+
+        .template-modern .cv-sidebar {
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 40px 30px;
+        }
+
+        .template-modern .cv-main {
+            padding: 40px;
+        }
+
+        .template-modern .cv-name {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .template-modern .cv-title {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            opacity: 0.9;
+            margin-bottom: 30px;
+            line-height: 1.3;
+        }
+
+        .template-modern .sidebar-section {
+            margin-bottom: 30px;
+        }
+
+        .template-modern .sidebar-section h3 {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.3;
+        }
+
+        /* Minimalist Template */
+        .template-minimalist .cv-header {
+            padding: 40px 40px 30px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .template-minimalist .cv-name {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            letter-spacing: -1px;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .template-minimalist .cv-title {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: var(--text-medium);
+            font-weight: 400;
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+
+        .template-minimalist .section-title {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid var(--text-dark);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        /* Elite Executive Template */
+        .template-elite {
+            display: grid;
+            grid-template-columns: 5px 1fr;
+            min-height: 1123px;
+            background: var(--bg-cream);
+            position: relative;
+            max-width: 210mm;
+            margin: 0 auto;
+        }
+
+        .template-elite::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 5px;
+            width: 1px;
+            height: 120px;
+            background: linear-gradient(180deg, var(--elite-gold) 0%, rgba(212, 175, 55, 0) 100%);
+        }
+
+        .elite-accent {
+            background: linear-gradient(180deg, var(--elite-gold) 0%, var(--elite-dark) 50%, var(--elite-charcoal) 100%);
+            position: relative;
+        }
+
+        .elite-accent::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 3px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        .elite-content {
+            padding: 40px;
+        }
+
+        .elite-header {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .elite-name-wrapper {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .elite-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            color: var(--elite-dark);
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+            margin-bottom: 8px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .elite-name::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--elite-gold);
+        }
+
+        .elite-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            font-weight: 400;
+            color: var(--text-medium);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 20px;
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+
+        .elite-contact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            color: var(--text-medium);
+            margin-top: 20px;
+        }
+
+        .elite-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+
+        .elite-contact-item i {
+            color: var(--elite-gold);
+            font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+        }
+
+        .elite-contact-item:not(:last-child)::after {
+            content: '•';
+            position: absolute;
+            right: -15px;
+            color: var(--elite-silver);
+            font-weight: 300;
+        }
+
+        .elite-section {
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .elite-section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .elite-section-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--elite-gold) 0%, var(--elite-silver) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            flex-shrink: 0;
+        }
+
+        .elite-section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            font-weight: 600;
+            color: var(--elite-dark);
+            letter-spacing: -0.3px;
+            position: relative;
+            line-height: 1.3;
+        }
+
+        .elite-section-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--elite-gold) 0%, transparent 100%);
+            margin-left: 10px;
+        }
+
+        .elite-summary {
+            font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+            line-height: 1.8;
+            color: var(--text-dark);
+            font-weight: 400;
+            padding-left: 44px;
+            position: relative;
+        }
+
+        .elite-summary::before {
+            content: '"';
+            position: absolute;
+            left: 10px;
+            top: -10px;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            color: var(--elite-gold);
+            opacity: 0.3;
+            font-weight: 700;
+        }
+
+        .elite-timeline-item {
+            padding-left: 44px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .elite-timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 8px;
+            width: 10px;
+            height: 10px;
+            background: var(--elite-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+        }
+
+        .elite-timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 18px;
+            top: 20px;
+            width: 2px;
+            height: calc(100% - 10px);
+            background: linear-gradient(180deg, var(--elite-gold) 0%, transparent 100%);
+        }
+
+        .elite-timeline-item:last-child::after {
+            display: none;
+        }
+
+        .elite-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .elite-item-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-weight: 700;
+            color: var(--elite-dark);
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .elite-item-company {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            color: var(--text-medium);
+            font-weight: 500;
+            margin-bottom: 2px;
+            line-height: 1.3;
+        }
+
+        .elite-item-location {
+            font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+            color: var(--text-light);
+            font-style: italic;
+            line-height: 1.3;
+        }
+
+        .elite-item-date {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            color: var(--elite-gold);
+            font-weight: 600;
+            white-space: nowrap;
+            padding: 4px 12px;
+            background: rgba(212, 175, 55, 0.08);
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .elite-item-description {
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            line-height: 1.7;
+            color: var(--text-medium);
+            margin-top: 12px;
+        }
+
+        .elite-item-description ul {
+            margin-top: 8px;
+            padding-left: 20px;
+        }
+
+        .elite-item-description li {
+            margin-bottom: 6px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .elite-item-description li::marker {
+            color: var(--elite-gold);
+        }
+
+        .elite-skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding-left: 44px;
+        }
+
+        .elite-skill-category {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(26, 26, 46, 0.02) 100%);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--elite-gold);
+        }
+
+        .elite-skill-category-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            font-weight: 700;
+            color: var(--elite-dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            line-height: 1.3;
+        }
+
+        .elite-skill-category-title i {
+            color: var(--elite-gold);
+            font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+        }
+
+        .elite-skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .elite-skill-tag {
+            font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+            color: var(--text-dark);
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            font-weight: 500;
+        }
+
+        .elite-education-item {
+            padding-left: 44px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .elite-education-item::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 8px;
+            width: 10px;
+            height: 10px;
+            background: var(--elite-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+        }
+
+        .elite-degree {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-weight: 700;
+            color: var(--elite-dark);
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .elite-institution {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            color: var(--text-medium);
+            font-weight: 500;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .elite-education-details {
+            display: flex;
+            gap: 12px;
+            font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+            color: var(--text-light);
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .elite-education-detail {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .elite-education-detail i {
+            color: var(--elite-gold);
+            font-size: clamp(0.7rem, 1.5vw, 0.75rem);
+        }
+
+        .elite-footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid var(--elite-gold);
+            text-align: center;
+            position: relative;
+        }
+
+        .elite-footer::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: var(--elite-dark);
+        }
+
+        .elite-footer-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+            color: var(--text-light);
+            font-style: italic;
+            line-height: 1.3;
+        }
+
+        /* Timeline Item */
+        .timeline-item {
+            margin-bottom: 25px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+            line-height: 1.3;
+        }
+
+        .item-date {
+            color: var(--primary);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            white-space: nowrap;
+        }
+
+        .item-subtitle {
+            color: var(--text-medium);
+            margin-bottom: 8px;
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            line-height: 1.3;
+        }
+
+        .item-description {
+            color: var(--text-medium);
+            line-height: 1.6;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+        }
+
+        /* Action Toolbar */
+        .action-toolbar {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            box-shadow: var(--shadow-lg);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .action-toolbar h3 {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+
+        .toolbar-section {
+            margin-bottom: 20px;
+        }
+
+        .toolbar-section:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Editable Content */
+        [contenteditable="true"] {
+            outline: none;
+            cursor: text;
+            transition: all 0.2s ease;
+            border-radius: 4px;
+            padding: 8px 12px;
+            margin: -8px -12px;
+            min-height: 44px;
+            -webkit-user-select: text;
+            user-select: text;
+            -webkit-tap-highlight-color: rgba(79, 70, 229, 0.1);
+            font-size: inherit;
+            line-height: inherit;
+        }
+
+        [contenteditable="true"]:hover {
+            background: rgba(79, 70, 229, 0.05);
+        }
+
+        [contenteditable="true"]:focus {
+            background: rgba(79, 70, 229, 0.1);
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+        }
+
+        /* Word Count Indicator */
+        .word-count {
+            position: absolute;
+            bottom: 4px;
+            right: 8px;
+            font-size: clamp(0.65rem, 1.5vw, 0.75rem);
+            color: var(--text-light);
+            background: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .skill-name {
+            flex: 0 0 140px;
+            font-weight: 500;
+            color: var(--text-dark);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+        }
+
+        .skill-bar {
+            flex: 1;
+            height: 8px;
+            background: var(--bg-gray);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+            min-width: 300px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .toast.success {
+            border-left-color: var(--success);
+        }
+
+        .toast.warning {
+            border-left-color: var(--warning);
+        }
+
+        .toast.error {
+            border-left-color: var(--danger);
+        }
+
+        .toast-icon {
+            font-size: 1.2rem;
+        }
+
+        .toast.success .toast-icon {
+            color: var(--success);
+        }
+
+        .toast.warning .toast-icon {
+            color: var(--warning);
+        }
+
+        .toast.error .toast-icon {
+            color: var(--danger);
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+        }
+
+        .toast-message {
+            font-size: 0.85rem;
+            color: var(--text-medium);
+            line-height: 1.4;
+        }
+
+        .toast-close {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        .toast.hide {
+            animation: slideOut 0.3s ease forwards;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .sidebar,
+            .action-toolbar,
+            .template-selection,
+            .welcome-screen,
+            .editor-header,
+            .toast-container,
+            .mobile-fab,
+            .mobile-toolbar,
+            .mobile-tips {
+                display: none !important;
+            }
+            
+            .editor-container {
+                grid-template-columns: 1fr !important;
+                padding: 0 !important;
+            }
+            
+            .cv-preview {
+                box-shadow: none !important;
+                padding: 0 !important;
+            }
+            
+            .cv-paper {
+                box-shadow: none !important;
+                max-width: 100% !important;
+            }
+            
+            .template-elite {
+                min-height: auto;
+                max-width: 210mm;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .editor-container.active {
+                grid-template-columns: 280px 1fr;
+            }
+            
+            .action-toolbar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .editor-container.active {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .sidebar {
+                position: static;
+                max-height: none;
+                padding: 20px 15px;
+            }
+            
+            .editor-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .header-right {
+                width: 100%;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .progress-container {
+                width: 100%;
+                justify-content: space-between;
+                flex-direction: row;
+            }
+            
+            .undo-redo-buttons {
+                display: flex;
+                gap: 10px;
+                width: 100%;
+            }
+            
+            .undo-redo-buttons .btn {
+                flex: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Mobile optimizations */
+            body {
+                padding-bottom: 70px;
+            }
+            
+            /* Welcome screen */
+            .welcome-content {
+                padding: 20px;
+            }
+            
+            .welcome-btn {
+                max-width: none;
+            }
+            
+            /* Template selection */
+            .template-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .template-preview {
+                height: 280px;
+            }
+            
+            /* Editor layout */
+            .editor-container.active {
+                padding: 10px;
+            }
+            
+            .editor-header {
+                padding: 12px;
+            }
+            
+            .progress-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+            
+            .progress-bar {
+                width: 100%;
+            }
+            
+            .template-modern {
+                grid-template-columns: 1fr;
+            }
+            
+            /* CV preview */
+            .cv-preview {
+                padding: 15px;
+                min-height: auto;
+                overflow-x: hidden;
+                margin-bottom: 80px;
+            }
+            
+            .cv-paper {
+                transform: scale(0.95);
+            }
+            
+            /* Template adjustments */
+            .template-classic .cv-header {
+                padding: 25px 20px 20px;
+            }
+            
+            .template-classic .cv-contact {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .template-classic .contact-item {
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .cv-body {
+                padding: 20px;
+            }
+            
+            .template-modern .cv-sidebar {
+                padding: 20px;
+            }
+            
+            .template-modern .cv-main {
+                padding: 20px;
+            }
+            
+            .template-minimalist .cv-header {
+                padding: 25px 20px 20px;
+            }
+            
+            /* Elite template responsive */
+            .elite-content {
+                padding: 20px;
+            }
+
+            .elite-name::after {
+                width: 40px;
+            }
+
+            .elite-contact {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .elite-contact-item:not(:last-child)::after {
+                display: none;
+            }
+
+            .elite-skills-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .elite-item-header {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .elite-item-date {
+                align-self: flex-start;
+            }
+
+            .elite-timeline-item,
+            .elite-education-item,
+            .elite-summary,
+            .elite-skills-grid {
+                padding-left: 30px;
+            }
+
+            .elite-timeline-item::before,
+            .elite-education-item::before {
+                left: 5px;
+            }
+
+            .elite-timeline-item::after {
+                left: 9px;
+            }
+
+            .elite-summary::before {
+                left: -5px;
+                font-size: 2.5rem;
+            }
+            
+            /* Content adjustments */
+            .section-title {
+                margin-bottom: 15px;
+            }
+            
+            .timeline-item {
+                padding-left: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .item-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .item-date {
+                margin-top: 5px;
+            }
+            
+            /* Skills grid */
+            .skills-grid {
+                gap: 15px;
+            }
+            
+            .skill-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .skill-name {
+                flex: none;
+                width: 100%;
+            }
+            
+            .skill-bar {
+                width: 100%;
+            }
+            
+            /* Action toolbar */
+            .action-toolbar {
+                display: none !important;
+            }
+            
+            /* Mobile toolbar */
+            .mobile-toolbar {
+                display: flex;
+            }
+            
+            .mobile-fab {
+                display: flex;
+            }
+            
+            /* Toast */
+            .toast-container {
+                left: 10px;
+                right: 10px;
+                top: 10px;
+            }
+            
+            .toast {
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .word-count {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin-top: 5px;
+                text-align: right;
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 480px) {
+            .template-preview {
+                height: 220px;
+            }
+            
+            .editor-header {
+                padding: 10px;
+            }
+            
+            .progress-bar {
+                width: 100px;
+            }
+            
+            .auto-save-badge {
+                padding: 3px 8px;
+            }
+            
+            .form-group {
+                margin-bottom: 15px;
+            }
+            
+            .section-divider {
+                margin: 15px 0;
+            }
+            
+            .cv-paper {
+                transform: scale(0.9);
+            }
+        }
+
+        /* Fix for iOS Safari */
+        @supports (-webkit-touch-callout: none) {
+            .welcome-screen,
+            .template-selection,
+            .editor-container {
+                min-height: -webkit-fill-available;
+            }
+            
+            body {
+                min-height: -webkit-fill-available;
+            }
+            
+            .cv-preview {
+                max-height: 80vh;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            input, textarea, [contenteditable] {
+                font-size: 16px !important;
+            }
+        }
+
+        /* Mobile device specific overrides */
+        .mobile-device .template-card:hover {
+            transform: none;
+        }
+
+        .mobile-device .btn-primary:hover,
+        .mobile-device .btn-secondary:hover,
+        .mobile-device .btn-success:hover {
+            transform: none;
+        }
+
+        .mobile-device .template-card:active,
+        .mobile-device .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Improve scrolling performance */
+        .cv-preview {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Better tap highlights */
+        button, 
+        [contenteditable="true"], 
+        .form-input,
+        .select-template-btn {
+            -webkit-tap-highlight-color: rgba(79, 70, 229, 0.1);
+        }
+
+        /* Prevent text selection on buttons */
+        button {
+            user-select: none;
+        }
+
+        /* Loading Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease;
+        }
+
+        /* Mobile swipe indicators */
+        .swipe-indicator {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            z-index: 999;
+            display: none;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        /* Mobile zoom prevention */
+        .prevent-zoom {
+            touch-action: pan-y;
+            -webkit-user-drag: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-content">
+            <h1 class="fade-in-up">✨ Professional CV Builder</h1>
+            <p class="fade-in-up" style="animation-delay: 0.1s;">Create a stunning resume in minutes with our beautiful templates</p>
+            <button class="welcome-btn fade-in-up" style="animation-delay: 0.2s;" onclick="showTemplates()">
+                Get Started <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Template Selection -->
+    <div class="template-selection" id="templateSelection">
+        <div class="template-header">
+            <h2>Choose Your Template</h2>
+            <p>Select a professional design that matches your style</p>
+        </div>
+
+        <div class="template-grid">
+            <!-- Classic Template -->
+            <div class="template-card" onclick="selectTemplate('classic')">
+                <div class="template-preview">
+                    <div class="template-badge badge-popular">Popular</div>
+                    <div style="padding: 30px; height: 100%;">
+                        <div style="text-align: center; border-bottom: 3px solid #4F46E5; padding-bottom: 20px; margin-bottom: 20px;">
+                            <h3 style="font-size: 1.8rem; margin-bottom: 5px;">John Doe</h3>
+                            <p style="color: #4F46E5; font-weight: 600;">Software Engineer</p>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="color: #4F46E5; border-bottom: 2px solid #4F46E5; padding-bottom: 5px; margin-bottom: 10px;">Professional Summary</h4>
+                            <p style="font-size: 0.75rem; color: #6B7280; line-height: 1.4;">Experienced professional with expertise in delivering high-quality solutions...</p>
+                        </div>
+                        <div>
+                            <h4 style="color: #4F46E5; border-bottom: 2px solid #4F46E5; padding-bottom: 5px; margin-bottom: 10px;">Experience</h4>
+                            <div style="font-size: 0.7rem; margin-bottom: 8px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                                    <strong>Senior Developer</strong>
+                                    <span style="color: #4F46E5;">2020 - Present</span>
+                                </div>
+                                <p style="color: #6B7280;">Tech Company Inc.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="template-info">
+                    <h3>Classic Professional</h3>
+                    <p>Traditional layout perfect for corporate and professional roles</p>
+                    <div class="template-features">
+                        <span class="feature-tag">ATS-Friendly</span>
+                        <span class="feature-tag">Clean Design</span>
+                        <span class="feature-tag">Easy to Read</span>
+                    </div>
+                    <button class="select-template-btn">Select Template</button>
+                </div>
+            </div>
+
+            <!-- Modern Template -->
+            <div class="template-card" onclick="selectTemplate('modern')">
+                <div class="template-preview">
+                    <div class="template-badge badge-modern">Modern</div>
+                    <div style="display: grid; grid-template-columns: 35% 65%; height: 100%;">
+                        <div style="background: linear-gradient(180deg, #4F46E5 0%, #4338CA 100%); color: white; padding: 20px;">
+                            <h3 style="font-size: 1.3rem; margin-bottom: 5px;">Jane Smith</h3>
+                            <p style="font-size: 0.8rem; opacity: 0.9; margin-bottom: 20px;">UX Designer</p>
+                            <div style="margin-bottom: 15px;">
+                                <h4 style="font-size: 0.7rem; text-transform: uppercase; margin-bottom: 8px;">Contact</h4>
+                                <p style="font-size: 0.65rem; opacity: 0.9; line-height: 1.4;">email@example.com<br>+1 234 567 890</p>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 0.7rem; text-transform: uppercase; margin-bottom: 8px;">Skills</h4>
+                                <p style="font-size: 0.65rem; opacity: 0.9;">UI/UX Design<br>Figma<br>Adobe XD</p>
+                            </div>
+                        </div>
+                        <div style="padding: 20px;">
+                            <h4 style="color: #4F46E5; font-size: 0.8rem; margin-bottom: 8px; border-bottom: 2px solid #4F46E5; padding-bottom: 5px;">About Me</h4>
+                            <p style="font-size: 0.65rem; color: #6B7280; line-height: 1.4; margin-bottom: 12px;">Creative designer passionate about user experience...</p>
+                            <h4 style="color: #4F46E5; font-size: 0.8rem; margin-bottom: 8px; border-bottom: 2px solid #4F46E5; padding-bottom: 5px;">Experience</h4>
+                            <div style="font-size: 0.6rem; color: #6B7280;">
+                                <strong style="color: #1F2937;">Lead Designer</strong>
+                                <p>Creative Agency • 2021-Present</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="template-info">
+                    <h3>Modern Two-Column</h3>
+                    <p>Contemporary design with sidebar for skills and contact info</p>
+                    <div class="template-features">
+                        <span class="feature-tag">Eye-Catching</span>
+                        <span class="feature-tag">Organized</span>
+                        <span class="feature-tag">Creative</span>
+                    </div>
+                    <button class="select-template-btn">Select Template</button>
+                </div>
+            </div>
+
+            <!-- Minimalist Template -->
+            <div class="template-card" onclick="selectTemplate('minimalist')">
+                <div class="template-preview">
+                    <div class="template-badge badge-professional">Minimalist</div>
+                    <div style="padding: 30px; height: 100%;">
+                        <div style="border-bottom: 1px solid #E5E7EB; padding-bottom: 20px; margin-bottom: 20px;">
+                            <h3 style="font-size: 2rem; font-weight: 300; margin-bottom: 5px;">Alex Johnson</h3>
+                            <p style="color: #6B7280; font-size: 0.85rem;">Marketing Manager</p>
+                            <p style="color: #9CA3AF; font-size: 0.7rem; margin-top: 8px;">email@example.com • linkedin.com/in/alex</p>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #1F2937; padding-bottom: 5px; margin-bottom: 10px;">Experience</h4>
+                            <div style="font-size: 0.7rem; margin-bottom: 10px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                                    <strong>Marketing Director</strong>
+                                    <span style="color: #6B7280;">2019 - Now</span>
+                                </div>
+                                <p style="color: #6B7280; font-size: 0.65rem;">Tech Startup Ltd</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #1F2937; padding-bottom: 5px; margin-bottom: 10px;">Education</h4>
+                            <div style="font-size: 0.7rem;">
+                                <strong>MBA in Marketing</strong>
+                                <p style="color: #6B7280; font-size: 0.65rem;">Business School</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="template-info">
+                    <h3>Minimalist Elegance</h3>
+                    <p>Clean and simple design focused on content and readability</p>
+                    <div class="template-features">
+                        <span class="feature-tag">Elegant</span>
+                        <span class="feature-tag">Simple</span>
+                        <span class="feature-tag">Professional</span>
+                    </div>
+                    <button class="select-template-btn">Select Template</button>
+                </div>
+            </div>
+
+            <!-- Elite Executive Template -->
+            <div class="template-card" onclick="selectTemplate('elite')">
+                <div class="template-preview">
+                    <div class="template-badge badge-elite">Elite</div>
+                    <div style="display: grid; grid-template-columns: 5px 1fr; height: 100%;">
+                        <div style="background: linear-gradient(180deg, #D4AF37 0%, #1a1a2e 50%, #2d2d44 100%);"></div>
+                        <div style="padding: 20px; background: #FFFEF9;">
+                            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #1a1a2e; margin-bottom: 5px; position: relative; padding-bottom: 10px;">
+                                <span style="display: block; margin-bottom: 3px;">Alexandra Sterling</span>
+                                <span style="font-size: 0.7rem; color: #6B7280; text-transform: uppercase; letter-spacing: 1px;">Chief Executive Officer</span>
+                                <span style="position: absolute; bottom: 0; left: 0; width: 30px; height: 2px; background: #D4AF37;"></span>
+                            </h3>
+                            <div style="margin-top: 15px; font-size: 0.6rem; color: #6B7280;">
+                                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 5px;">
+                                    <i class="fas fa-envelope" style="color: #D4AF37; font-size: 0.6rem;"></i>
+                                    <span>email@example.com</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 5px;">
+                                    <i class="fas fa-phone" style="color: #D4AF37; font-size: 0.6rem;"></i>
+                                    <span>+1 (555) 987-6543</span>
+                                </div>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                                    <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #D4AF37 0%, #C0C0C0 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-briefcase" style="color: white; font-size: 0.6rem;"></i>
+                                    </div>
+                                    <span style="font-size: 0.7rem; font-weight: 600; color: #1a1a2e;">Professional Experience</span>
+                                </div>
+                                <div style="font-size: 0.6rem; color: #6B7280;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                                        <strong style="color: #1a1a2e;">Chief Executive Officer</strong>
+                                        <span style="color: #D4AF37; font-size: 0.55rem;">2020-Present</span>
+                                    </div>
+                                    <p style="font-size: 0.55rem;">Quantum Technologies Inc.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="template-info">
+                    <h3>Elite Executive</h3>
+                    <p>Premium design for senior executives and leadership roles</p>
+                    <div class="template-features">
+                        <span class="feature-tag">Executive</span>
+                        <span class="feature-tag">Premium</span>
+                        <span class="feature-tag">Luxury</span>
+                    </div>
+                    <button class="select-template-btn">Select Template</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Mobile Tips Overlay -->
+    <div class="mobile-tips" id="mobileTips">
+        <div class="mobile-tips-content">
+            <div class="mobile-tips-icon">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3>Mobile Editing Tips</h3>
+            <p>• <strong>Pinch to zoom</strong> for better text editing</p>
+            <p>• <strong>Swipe horizontally</strong> to navigate between sections</p>
+            <p>• Use the <strong>bottom toolbar</strong> for quick actions</p>
+            <p>• Tap the <strong>floating button</strong> to save/export</p>
+            <button class="mobile-tips-close" onclick="closeMobileTips()">Got it!</button>
+        </div>
+    </div>
+
+    <!-- Mobile FAB -->
+    <button class="mobile-fab" id="mobileFab" onclick="toggleMobileFab()">
+        <i class="fas fa-plus" id="fabIcon"></i>
+    </button>
+
+    <!-- Mobile Bottom Toolbar -->
+    <div class="mobile-toolbar" id="mobileToolbar">
+        <button class="mobile-toolbar-btn" onclick="mobileToolbarAction('undo')">
+            <i class="fas fa-undo"></i>
+            Undo
+        </button>
+        <button class="mobile-toolbar-btn" onclick="mobileToolbarAction('redo')">
+            <i class="fas fa-redo"></i>
+            Redo
+        </button>
+        <button class="mobile-toolbar-btn" onclick="mobileToolbarAction('save')">
+            <i class="fas fa-save"></i>
+            Save
+        </button>
+        <button class="mobile-toolbar-btn" onclick="mobileToolbarAction('export')">
+            <i class="fas fa-download"></i>
+            Export
+        </button>
+        <button class="mobile-toolbar-btn" onclick="mobileToolbarAction('menu')">
+            <i class="fas fa-ellipsis-h"></i>
+            More
+        </button>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-tips" id="mobileMenu" style="display: none;">
+        <div class="mobile-tips-content">
+            <h3>Quick Actions</h3>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin: 20px 0;">
+                <button class="btn btn-primary" onclick="addSection('experience')">
+                    <i class="fas fa-plus"></i> Add Experience
+                </button>
+                <button class="btn btn-primary" onclick="addSection('education')">
+                    <i class="fas fa-plus"></i> Add Education
+                </button>
+                <button class="btn btn-primary" onclick="addSection('skill')">
+                    <i class="fas fa-plus"></i> Add Skill
+                </button>
+                <button class="btn btn-secondary" onclick="changeTemplate()">
+                    <i class="fas fa-exchange-alt"></i> Change Template
+                </button>
+                <button class="btn btn-danger" onclick="resetCV()">
+                    <i class="fas fa-redo"></i> Reset CV
+                </button>
+            </div>
+            <button class="mobile-tips-close" onclick="closeMobileMenu()">Close</button>
+        </div>
+    </div>
+
+    <!-- Main Editor -->
+    <div class="editor-container" id="editorContainer">
+        <!-- Header -->
+        <div class="editor-header">
+            <div class="header-left">
+                <h2><i class="fas fa-file-alt"></i> CV Editor</h2>
+            </div>
+            <div class="header-right">
+                <div class="progress-container">
+                    <span class="progress-label">Completion:</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span id="progressText">0%</span>
+                </div>
+                <div class="status-indicator">
+                    <span class="auto-save-badge" id="autoSaveBadge">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Auto-save: <span id="lastSaveTime">Just now</span></span>
+                    </span>
+                </div>
+                <div class="undo-redo-buttons">
+                    <button class="btn btn-secondary" onclick="undo()" id="undoBtn" disabled>
+                        <i class="fas fa-undo"></i> Undo
+                    </button>
+                    <button class="btn btn-secondary" onclick="redo()" id="redoBtn" disabled>
+                        <i class="fas fa-redo"></i> Redo
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left Sidebar - Controls -->
+        <div class="sidebar">
+            <h3><i class="fas fa-user-edit"></i> Personal Information</h3>
+            
+            <div class="form-group">
+                <label class="form-label">
+                    Full Name
+                    <span class="help-icon" title="Use your full name as it appears on official documents">?</span>
+                </label>
+                <input type="text" class="form-input" id="inputName" value="Your Full Name" oninput="handleInputChange(event)">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">
+                    Professional Title
+                    <span class="help-icon" title="Your current job title or the position you're targeting">?</span>
+                </label>
+                <input type="text" class="form-input" id="inputTitle" value="Your Professional Title" oninput="handleInputChange(event)">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">
+                    Email
+                    <span class="help-icon" title="Use a professional email address">?</span>
+                </label>
+                <input type="email" class="form-input" id="inputEmail" value="your.email@example.com" oninput="handleInputChange(event)">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">
+                    Phone
+                    <span class="help-icon" title="Include country code if applying internationally">?</span>
+                </label>
+                <input type="tel" class="form-input" id="inputPhone" value="+1 (555) 123-4567" oninput="handleInputChange(event)">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">
+                    Location
+                    <span class="help-icon" title="City and country (no need for full address)">?</span>
+                </label>
+                <input type="text" class="form-input" id="inputLocation" value="City, Country" oninput="handleInputChange(event)">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">
+                    LinkedIn
+                    <span class="help-icon" title="Your LinkedIn profile URL (optional but recommended)">?</span>
+                </label>
+                <input type="text" class="form-input" id="inputLinkedin" value="linkedin.com/in/yourprofile" oninput="handleInputChange(event)">
+            </div>
+            
+            <div class="section-divider"></div>
+            
+            <h3><i class="fas fa-palette"></i> Customization</h3>
+            
+            <div class="form-group">
+                <label class="form-label">Primary Color</label>
+                <input type="color" class="form-input" id="inputColor" value="#4F46E5" oninput="handleInputChange(event)">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Font Size</label>
+                <input type="range" class="form-input" id="inputFontSize" min="12" max="18" value="14" oninput="handleInputChange(event)">
+                <div style="font-size: 0.85rem; color: var(--text-medium); margin-top: 5px; text-align: center;" id="fontSizeValue">14px</div>
+            </div>
+            
+            <div class="section-divider"></div>
+            
+            <button class="btn btn-primary btn-block" onclick="changeTemplate()">
+                <i class="fas fa-exchange-alt"></i> Change Template
+            </button>
+            
+            <button class="btn btn-secondary btn-block" style="margin-top: 10px;" onclick="window.print()">
+                <i class="fas fa-download"></i> Download PDF
+            </button>
+
+            <button class="btn btn-success btn-block" style="margin-top: 10px;" onclick="exportCV()">
+                <i class="fas fa-file-export"></i> Export CV
+            </button>
+        </div>
+
+        <!-- Center - CV Preview -->
+        <div class="cv-preview">
+            <div class="cv-paper template-classic" id="cvPaper">
+                <div class="cv-header">
+                    <h1 class="cv-name" contenteditable="true" id="cvName" oninput="handleContentEditableChange(this)">Your Full Name</h1>
+                    <h2 class="cv-title" contenteditable="true" id="cvTitle" oninput="handleContentEditableChange(this)">Your Professional Title</h2>
+                    
+                    <div class="cv-contact">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span contenteditable="true" id="cvEmail" oninput="handleContentEditableChange(this)">your.email@example.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span contenteditable="true" id="cvPhone" oninput="handleContentEditableChange(this)">+1 (555) 123-4567</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span contenteditable="true" id="cvLocation" oninput="handleContentEditableChange(this)">City, Country</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fab fa-linkedin"></i>
+                            <span contenteditable="true" id="cvLinkedin" oninput="handleContentEditableChange(this)">linkedin.com/in/yourprofile</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cv-body">
+                    <!-- Professional Summary -->
+                    <div class="cv-section">
+                        <h3 class="section-title">Professional Summary</h3>
+                        <div class="section-content" contenteditable="true" id="cvSummary" oninput="handleContentEditableChange(this)">
+                            Results-driven professional with extensive experience in delivering high-impact solutions. Proven track record of exceeding targets and driving business growth. Excellent communicator and collaborative team player with strong analytical skills.
+                        </div>
+                    </div>
+                    
+                    <!-- Work Experience -->
+                    <div class="cv-section">
+                        <h3 class="section-title">Work Experience</h3>
+                        <div class="section-content" id="experienceContainer">
+                            <div class="timeline-item">
+                                <div class="item-header">
+                                    <div>
+                                        <div class="item-title" contenteditable="true" oninput="handleContentEditableChange(this)">Senior Software Engineer</div>
+                                        <div class="item-subtitle" contenteditable="true" oninput="handleContentEditableChange(this)">Tech Company Inc. • San Francisco, CA</div>
+                                    </div>
+                                    <div class="item-date" contenteditable="true" oninput="handleContentEditableChange(this)">2020 - Present</div>
+                                </div>
+                                <div class="item-description" contenteditable="true" oninput="handleContentEditableChange(this)">
+                                    Led development of cloud-based applications serving 100K+ users. Mentored junior developers and established coding standards. Improved system performance by 40% through optimization initiatives.
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="item-header">
+                                    <div>
+                                        <div class="item-title" contenteditable="true" oninput="handleContentEditableChange(this)">Software Engineer</div>
+                                        <div class="item-subtitle" contenteditable="true" oninput="handleContentEditableChange(this)">Digital Solutions Ltd. • New York, NY</div>
+                                    </div>
+                                    <div class="item-date" contenteditable="true" oninput="handleContentEditableChange(this)">2017 - 2020</div>
+                                </div>
+                                <div class="item-description" contenteditable="true" oninput="handleContentEditableChange(this)">
+                                    Developed and maintained multiple web applications using modern frameworks. Collaborated with cross-functional teams to deliver projects on time. Implemented automated testing reducing bugs by 60%.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Education -->
+                    <div class="cv-section">
+                        <h3 class="section-title">Education</h3>
+                        <div class="section-content" id="educationContainer">
+                            <div class="timeline-item">
+                                <div class="item-header">
+                                    <div>
+                                        <div class="item-title" contenteditable="true" oninput="handleContentEditableChange(this)">Bachelor of Science in Computer Science</div>
+                                        <div class="item-subtitle" contenteditable="true" oninput="handleContentEditableChange(this)">University Name • City, State</div>
+                                    </div>
+                                    <div class="item-date" contenteditable="true" oninput="handleContentEditableChange(this)">2013 - 2017</div>
+                                </div>
+                                <div class="item-description" contenteditable="true" oninput="handleContentEditableChange(this)">
+                                    Graduated with honors. Relevant coursework: Data Structures, Algorithms, Software Engineering, Database Systems.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Skills -->
+                    <div class="cv-section">
+                        <h3 class="section-title">Technical Skills</h3>
+                        <div class="section-content">
+                            <div class="skills-grid" id="skillsContainer">
+                                <div class="skill-item">
+                                    <div class="skill-name" contenteditable="true" oninput="handleContentEditableChange(this)">JavaScript/TypeScript</div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-name" contenteditable="true" oninput="handleContentEditableChange(this)">React & Node.js</div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-name" contenteditable="true" oninput="handleContentEditableChange(this)">Python & Django</div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-name" contenteditable="true" oninput="handleContentEditableChange(this)">Cloud (AWS/Azure)</div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-name" contenteditable="true" oninput="handleContentEditableChange(this)">DevOps & CI/CD</div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 70%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar - Quick Actions -->
+        <div class="action-toolbar">
+            <h3>Quick Actions</h3>
+            
+            <div class="toolbar-section">
+                <button class="btn btn-primary btn-block" onclick="addSection('experience')">
+                    <i class="fas fa-plus"></i> Add Experience
+                </button>
+            </div>
+            
+            <div class="toolbar-section">
+                <button class="btn btn-primary btn-block" onclick="addSection('education')">
+                    <i class="fas fa-plus"></i> Add Education
+                </button>
+            </div>
+            
+            <div class="toolbar-section">
+                <button class="btn btn-primary btn-block" onclick="addSection('skill')">
+                    <i class="fas fa-plus"></i> Add Skill
+                </button>
+            </div>
+            
+            <div class="section-divider"></div>
+            
+            <div class="toolbar-section">
+                <h4>Keyboard Shortcuts</h4>
+                <div style="font-size: 0.85rem; color: var(--text-medium); margin-top: 10px;">
+                    <div style="margin-bottom: 8px;"><strong>Ctrl+S:</strong> Save</div>
+                    <div style="margin-bottom: 8px;"><strong>Ctrl+Z:</strong> Undo</div>
+                    <div style="margin-bottom: 8px;"><strong>Ctrl+Y:</strong> Redo</div>
+                    <div style="margin-bottom: 8px;"><strong>Ctrl+P:</strong> Print/PDF</div>
+                </div>
+            </div>
+            
+            <div class="section-divider"></div>
+            
+            <div class="toolbar-section">
+                <button class="btn btn-secondary btn-block" onclick="saveCV()">
+                    <i class="fas fa-save"></i> Save Draft
+                </button>
+            </div>
+            
+            <div class="toolbar-section">
+                <button class="btn btn-secondary btn-block" onclick="loadCV()">
+                    <i class="fas fa-folder-open"></i> Load Draft
+                </button>
+            </div>
+            
+            <div class="toolbar-section">
+                <button class="btn btn-danger btn-block" onclick="resetCV()">
+                    <i class="fas fa-redo"></i> Reset CV
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTemplate = 'classic';
+        let cvData = {};
+        let history = [];
+        let currentStep = -1;
+        let autoSaveInterval;
+        let lastSaveTime = new Date();
+        let hasUnsavedChangesFlag = false;
+        let isMobile = false;
+        let mobileTipsShown = false;
+        let fabMenuOpen = false;
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        // Toast notification system
+        function showToast(message, type = 'success', title = '', duration = 5000) {
+            const toastContainer = document.getElementById('toastContainer');
+            const toastId = 'toast-' + Date.now();
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.id = toastId;
+            
+            const icons = {
+                success: 'fa-check-circle',
+                warning: 'fa-exclamation-triangle',
+                error: 'fa-times-circle'
+            };
+            
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="fas ${icons[type]}"></i>
+                </div>
+                <div class="toast-content">
+                    <div class="toast-title">${title || type.charAt(0).toUpperCase() + type.slice(1)}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <button class="toast-close" onclick="closeToast('${toastId}')">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            // Auto remove after duration
+            setTimeout(() => {
+                closeToast(toastId);
+            }, duration);
+        }
+        
+        function closeToast(toastId) {
+            const toast = document.getElementById(toastId);
+            if (toast) {
+                toast.classList.add('hide');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }
+        }
+
+        // Update last save time display
+        function updateLastSaveTime() {
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - lastSaveTime) / 1000);
+            
+            let displayText;
+            if (diffInSeconds < 60) {
+                displayText = 'Just now';
+            } else if (diffInSeconds < 3600) {
+                const minutes = Math.floor(diffInSeconds / 60);
+                displayText = `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+            } else {
+                const hours = Math.floor(diffInSeconds / 3600);
+                displayText = `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+            }
+            
+            document.getElementById('lastSaveTime').textContent = displayText;
+        }
+
+        // Calculate completion percentage
+        function calculateCompletion() {
+            const checks = [];
+            
+            // Check personal info
+            checks.push(document.getElementById('inputName').value.trim().length > 0);
+            checks.push(document.getElementById('inputTitle').value.trim().length > 0);
+            checks.push(document.getElementById('inputEmail').value.includes('@'));
+            
+            // Check content
+            const summary = document.getElementById('cvSummary');
+            if (summary) checks.push(summary.textContent.trim().length > 50);
+            
+            const experienceItems = document.querySelectorAll('.timeline-item, .elite-timeline-item').length;
+            checks.push(experienceItems > 0);
+            
+            const educationItems = document.querySelectorAll('#educationContainer .timeline-item, .elite-education-item').length;
+            checks.push(educationItems > 0);
+            
+            // Calculate percentage
+            const completed = checks.filter(Boolean).length;
+            const percentage = Math.round((completed / checks.length) * 100);
+            
+            return percentage;
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const percentage = calculateCompletion();
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            progressFill.style.width = percentage + '%';
+            progressText.textContent = percentage + '%';
+            
+            // Update color based on percentage
+            if (percentage < 30) {
+                progressFill.style.background = 'var(--danger)';
+            } else if (percentage < 70) {
+                progressFill.style.background = 'var(--warning)';
+            } else {
+                progressFill.style.background = 'var(--success)';
+            }
+        }
+
+        // History management for undo/redo
+        function saveHistoryState() {
+            const state = {
+                template: currentTemplate,
+                cvPaper: document.getElementById('cvPaper').innerHTML,
+                inputs: {
+                    name: document.getElementById('inputName').value,
+                    title: document.getElementById('inputTitle').value,
+                    email: document.getElementById('inputEmail').value,
+                    phone: document.getElementById('inputPhone').value,
+                    location: document.getElementById('inputLocation').value,
+                    linkedin: document.getElementById('inputLinkedin').value
+                },
+                color: document.getElementById('inputColor').value,
+                fontSize: document.getElementById('inputFontSize').value
+            };
+            
+            // Only save if different from last state
+            if (history.length === 0 || JSON.stringify(state) !== JSON.stringify(history[currentStep])) {
+                history = history.slice(0, currentStep + 1);
+                history.push(state);
+                currentStep++;
+                updateUndoRedoButtons();
+            }
+        }
+        
+        function updateUndoRedoButtons() {
+            document.getElementById('undoBtn').disabled = currentStep <= 0;
+            document.getElementById('redoBtn').disabled = currentStep >= history.length - 1;
+        }
+        
+        function undo() {
+            if (currentStep > 0) {
+                currentStep--;
+                restoreState(history[currentStep]);
+                showToast('Undo successful', 'success', 'Action undone');
+            }
+        }
+        
+        function redo() {
+            if (currentStep < history.length - 1) {
+                currentStep++;
+                restoreState(history[currentStep]);
+                showToast('Redo successful', 'success', 'Action redone');
+            }
+        }
+        
+        function restoreState(state) {
+            currentTemplate = state.template;
+            document.getElementById('cvPaper').innerHTML = state.cvPaper;
+            document.getElementById('cvPaper').className = `cv-paper template-${currentTemplate}`;
+            
+            // Restore inputs
+            document.getElementById('inputName').value = state.inputs.name;
+            document.getElementById('inputTitle').value = state.inputs.title;
+            document.getElementById('inputEmail').value = state.inputs.email;
+            document.getElementById('inputPhone').value = state.inputs.phone;
+            document.getElementById('inputLocation').value = state.inputs.location;
+            document.getElementById('inputLinkedin').value = state.inputs.linkedin;
+            
+            // Restore customization
+            document.getElementById('inputColor').value = state.color;
+            document.getElementById('inputFontSize').value = state.fontSize;
+            document.getElementById('fontSizeValue').textContent = state.fontSize + 'px';
+            
+            // Update CV preview
+            updateCV();
+            updateProgress();
+            
+            // Reattach event listeners
+            attachEditableEventListeners();
+        }
+
+        // Auto-save functionality
+        function startAutoSave() {
+            if (autoSaveInterval) {
+                clearInterval(autoSaveInterval);
+            }
+            autoSaveInterval = setInterval(() => {
+                if (hasUnsavedChangesFlag) {
+                    saveCV();
+                    hasUnsavedChangesFlag = false;
+                }
+            }, 10000); // Save every 10 seconds
+        }
+        
+        function hasUnsavedChanges() {
+            return hasUnsavedChangesFlag;
+        }
+
+        // Handle input changes
+        function handleInputChange(event) {
+            hasUnsavedChangesFlag = true;
+            saveHistoryState();
+            updateCV();
+            updateProgress();
+            
+            // Update font size display
+            if (event.target.id === 'inputFontSize') {
+                document.getElementById('fontSizeValue').textContent = event.target.value + 'px';
+            }
+        }
+        
+        function handleContentEditableChange(element) {
+            hasUnsavedChangesFlag = true;
+            saveHistoryState();
+            updateProgress();
+        }
+
+        // Attach event listeners to all editable elements
+        function attachEditableEventListeners() {
+            const editableElements = document.querySelectorAll('[contenteditable="true"]');
+            editableElements.forEach(element => {
+                // Remove existing listeners to avoid duplicates
+                const newElement = element.cloneNode(true);
+                element.parentNode.replaceChild(newElement, element);
+                
+                // Add new listeners
+                newElement.addEventListener('input', () => handleContentEditableChange(newElement));
+                newElement.addEventListener('blur', saveHistoryState);
+                
+                // Mobile-specific: Prevent zoom on double tap
+                if (isMobile) {
+                    newElement.addEventListener('touchstart', function(e) {
+                        if (e.touches.length > 1) {
+                            e.preventDefault();
+                        }
+                    }, { passive: false });
+                }
+            });
+        }
+
+        // Show template selection
+        function showTemplates() {
+            document.getElementById('welcomeScreen').classList.add('hide');
+            setTimeout(() => {
+                document.getElementById('templateSelection').classList.add('active');
+                initMobileFeatures();
+            }, 500);
+        }
+
+        // Select template and start editing
+        function selectTemplate(template) {
+            currentTemplate = template;
+            document.getElementById('templateSelection').classList.remove('active');
+            document.getElementById('editorContainer').classList.add('active');
+            
+            const cvPaper = document.getElementById('cvPaper');
+            cvPaper.className = `cv-paper template-${template}`;
+            
+            if (template === 'modern') {
+                applyModernTemplate();
+            } else if (template === 'minimalist') {
+                applyMinimalistTemplate();
+            } else if (template === 'elite') {
+                applyEliteTemplate();
+            }
+            
+            // Initialize history and auto-save
+            saveHistoryState();
+            startAutoSave();
+            attachEditableEventListeners();
+            
+            updateCV();
+            updateProgress();
+            
+            showToast('Template selected! Start editing your CV.', 'success', 'Ready to edit!');
+            
+            // Show mobile tips if first time on mobile
+            if (isMobile && !mobileTipsShown) {
+                setTimeout(() => {
+                    showMobileTips();
+                    mobileTipsShown = true;
+                }, 1000);
+            }
+        }
+
+        // Apply Modern Template Structure
+        function applyModernTemplate() {
+            const cvPaper = document.getElementById('cvPaper');
+            cvPaper.innerHTML = `
+                <div class="cv-sidebar">
+                    <h1 class="cv-name" contenteditable="true" id="cvName">Your Full Name</h1>
+                    <h2 class="cv-title" contenteditable="true" id="cvTitle">Your Professional Title</h2>
+                    
+                    <div class="sidebar-section">
+                        <h3>Contact</h3>
+                        <div style="font-size: 0.9rem; line-height: 1.8;">
+                            <div><i class="fas fa-envelope" style="width: 20px;"></i> <span contenteditable="true" id="cvEmail">email@example.com</span></div>
+                            <div><i class="fas fa-phone" style="width: 20px;"></i> <span contenteditable="true" id="cvPhone">+1 (555) 123-4567</span></div>
+                            <div><i class="fas fa-map-marker-alt" style="width: 20px;"></i> <span contenteditable="true" id="cvLocation">City, Country</span></div>
+                            <div><i class="fab fa-linkedin" style="width: 20px;"></i> <span contenteditable="true" id="cvLinkedin">linkedin.com/in/you</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="sidebar-section">
+                        <h3>Skills</h3>
+                        <div style="font-size: 0.9rem; line-height: 1.8;" contenteditable="true" id="cvSkills">
+                            • JavaScript/TypeScript<br>
+                            • React & Node.js<br>
+                            • Python & Django<br>
+                            • Cloud (AWS/Azure)<br>
+                            • DevOps & CI/CD
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cv-main">
+                    <div class="cv-section">
+                        <h3 class="section-title">About Me</h3>
+                        <div class="section-content" contenteditable="true" id="cvSummary">
+                            Results-driven professional with extensive experience in delivering high-impact solutions. Proven track record of exceeding targets and driving business growth.
+                        </div>
+                    </div>
+                    
+                    <div class="cv-section">
+                        <h3 class="section-title">Experience</h3>
+                        <div class="section-content" id="experienceContainer">
+                            <div class="timeline-item">
+                                <div class="item-header">
+                                    <div>
+                                        <div class="item-title" contenteditable="true">Senior Software Engineer</div>
+                                        <div class="item-subtitle" contenteditable="true">Tech Company Inc.</div>
+                                    </div>
+                                    <div class="item-date" contenteditable="true">2020 - Present</div>
+                                </div>
+                                <div class="item-description" contenteditable="true">
+                                    Led development of cloud-based applications. Mentored junior developers and established coding standards.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="cv-section">
+                        <h3 class="section-title">Education</h3>
+                        <div class="section-content" id="educationContainer">
+                            <div class="timeline-item">
+                                <div class="item-header">
+                                    <div>
+                                        <div class="item-title" contenteditable="true">Bachelor of Science in Computer Science</div>
+                                        <div class="item-subtitle" contenteditable="true">University Name</div>
+                                    </div>
+                                    <div class="item-date" contenteditable="true">2013 - 2017</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Reattach event listeners
+            setTimeout(() => attachEditableEventListeners(), 100);
+        }
+
+        // Apply Minimalist Template Structure
+        function applyMinimalistTemplate() {
+            const cvPaper = document.getElementById('cvPaper');
+            cvPaper.innerHTML = `
+                <div class="cv-header">
+                    <h1 class="cv-name" contenteditable="true" id="cvName">Your Full Name</h1>
+                    <h2 class="cv-title" contenteditable="true" id="cvTitle">Your Professional Title</h2>
+                    <div style="color: var(--text-light); font-size: 0.9rem; margin-top: 12px;">
+                        <span contenteditable="true" id="cvEmail">email@example.com</span> •
+                        <span contenteditable="true" id="cvPhone">+1 (555) 123-4567</span> •
+                        <span contenteditable="true" id="cvLocation">City, Country</span> •
+                        <span contenteditable="true" id="cvLinkedin">linkedin.com/in/you</span>
+                    </div>
+                </div>
+                
+                <div class="cv-body">
+                    <div class="cv-section">
+                        <h3 class="section-title">Professional Summary</h3>
+                        <div class="section-content" contenteditable="true" id="cvSummary">
+                            Results-driven professional with extensive experience in delivering high-impact solutions. Proven track record of exceeding targets and driving business growth.
+                        </div>
+                    </div>
+                    
+                    <div class="cv-section">
+                        <h3 class="section-title">Experience</h3>
+                        <div class="section-content" id="experienceContainer">
+                            <div class="timeline-item">
+                                <div class="item-header">
+                                    <div>
+                                        <div class="item-title" contenteditable="true">Senior Software Engineer</div>
+                                        <div class="item-subtitle" contenteditable="true">Tech Company Inc. • City</div>
+                                    </div>
+                                    <div class="item-date" contenteditable="true">2020 - Present</div>
+                                </div>
+                                <div class="item-description" contenteditable="true">
+                                    Led development of cloud-based applications. Mentored junior developers.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="cv-section">
+                        <h3 class="section-title">Education</h3>
+                        <div class="section-content" id="educationContainer">
+                            <div class="timeline-item">
+                                <div class="item-header">
+                                    <div>
+                                        <div class="item-title" contenteditable="true">Bachelor of Science in Computer Science</div>
+                                        <div class="item-subtitle" contenteditable="true">University Name</div>
+                                    </div>
+                                    <div class="item-date" contenteditable="true">2013 - 2017</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="cv-section">
+                        <h3 class="section-title">Skills</h3>
+                        <div class="section-content" style="display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.9rem;" contenteditable="true" id="cvSkills">
+                            <span>JavaScript/TypeScript</span> •
+                            <span>React & Node.js</span> •
+                            <span>Python</span> •
+                            <span>Cloud (AWS)</span> •
+                            <span>DevOps</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Reattach event listeners
+            setTimeout(() => attachEditableEventListeners(), 100);
+        }
+
+        // Apply Elite Executive Template Structure
+        function applyEliteTemplate() {
+            const cvPaper = document.getElementById('cvPaper');
+            cvPaper.innerHTML = `
+                <div class="elite-accent"></div>
+                <div class="elite-content">
+                    <div class="elite-header">
+                        <div class="elite-name-wrapper">
+                            <h1 class="elite-name" contenteditable="true" id="cvName">Your Full Name</h1>
+                        </div>
+                        <h2 class="elite-title" contenteditable="true" id="cvTitle">Your Professional Title</h2>
+                        
+                        <div class="elite-contact">
+                            <div class="elite-contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span contenteditable="true" id="cvEmail">email@example.com</span>
+                            </div>
+                            <div class="elite-contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span contenteditable="true" id="cvPhone">+1 (555) 123-4567</span>
+                            </div>
+                            <div class="elite-contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span contenteditable="true" id="cvLocation">City, Country</span>
+                            </div>
+                            <div class="elite-contact-item">
+                                <i class="fab fa-linkedin"></i>
+                                <span contenteditable="true" id="cvLinkedin">linkedin.com/in/yourprofile</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="elite-section">
+                        <div class="elite-section-header">
+                            <div class="elite-section-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h3 class="elite-section-title">Executive Profile</h3>
+                            <div class="elite-section-line"></div>
+                        </div>
+                        <div class="elite-summary" contenteditable="true" id="cvSummary">
+                            Results-driven executive with extensive experience in delivering high-impact solutions. Proven track record of exceeding targets and driving business growth. Strategic leader with strong analytical skills and excellent communication abilities.
+                        </div>
+                    </div>
+
+                    <div class="elite-section">
+                        <div class="elite-section-header">
+                            <div class="elite-section-icon">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <h3 class="elite-section-title">Professional Experience</h3>
+                            <div class="elite-section-line"></div>
+                        </div>
+
+                        <div class="elite-timeline-item">
+                            <div class="elite-item-header">
+                                <div>
+                                    <div class="elite-item-title" contenteditable="true">Senior Software Engineer</div>
+                                    <div class="elite-item-company" contenteditable="true">Tech Company Inc.</div>
+                                    <div class="elite-item-location" contenteditable="true">San Francisco, CA</div>
+                                </div>
+                                <div class="elite-item-date" contenteditable="true">2020 - Present</div>
+                            </div>
+                            <div class="elite-item-description" contenteditable="true">
+                                Led development of cloud-based applications. Mentored junior developers and established coding standards.
+                                <ul>
+                                    <li>Improved system performance by 40% through optimization initiatives</li>
+                                    <li>Led development of cloud-based applications serving 100K+ users</li>
+                                    <li>Established coding standards and best practices</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="elite-section">
+                        <div class="elite-section-header">
+                            <div class="elite-section-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h3 class="elite-section-title">Education & Credentials</h3>
+                            <div class="elite-section-line"></div>
+                        </div>
+
+                        <div class="elite-education-item">
+                            <div class="elite-degree" contenteditable="true">Bachelor of Science in Computer Science</div>
+                            <div class="elite-institution" contenteditable="true">University Name</div>
+                            <div class="elite-education-details">
+                                <div class="elite-education-detail">
+                                    <i class="fas fa-calendar"></i>
+                                    <span contenteditable="true">2013 - 2017</span>
+                                </div>
+                                <div class="elite-education-detail">
+                                    <i class="fas fa-award"></i>
+                                    <span contenteditable="true">Graduated with Honors</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="elite-section">
+                        <div class="elite-section-header">
+                            <div class="elite-section-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h3 class="elite-section-title">Core Competencies</h3>
+                            <div class="elite-section-line"></div>
+                        </div>
+
+                        <div class="elite-skills-grid">
+                            <div class="elite-skill-category">
+                                <div class="elite-skill-category-title">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span contenteditable="true">Technical Skills</span>
+                                </div>
+                                <div class="elite-skill-list">
+                                    <span class="elite-skill-tag" contenteditable="true">JavaScript/TypeScript</span>
+                                    <span class="elite-skill-tag" contenteditable="true">React & Node.js</span>
+                                    <span class="elite-skill-tag" contenteditable="true">Python & Django</span>
+                                    <span class="elite-skill-tag" contenteditable="true">Cloud (AWS/Azure)</span>
+                                </div>
+                            </div>
+
+                            <div class="elite-skill-category">
+                                <div class="elite-skill-category-title">
+                                    <i class="fas fa-users"></i>
+                                    <span contenteditable="true">Soft Skills</span>
+                                </div>
+                                <div class="elite-skill-list">
+                                    <span class="elite-skill-tag" contenteditable="true">Leadership</span>
+                                    <span class="elite-skill-tag" contenteditable="true">Communication</span>
+                                    <span class="elite-skill-tag" contenteditable="true">Project Management</span>
+                                    <span class="elite-skill-tag" contenteditable="true">Strategic Planning</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="elite-footer">
+                        <div class="elite-footer-text" contenteditable="true">References available upon request</div>
+                    </div>
+                </div>
+            `;
+            
+            // Reattach event listeners
+            setTimeout(() => attachEditableEventListeners(), 100);
+        }
+
+        // Update CV from inputs
+        function updateCV() {
+            const name = document.getElementById('inputName').value;
+            const title = document.getElementById('inputTitle').value;
+            const email = document.getElementById('inputEmail').value;
+            const phone = document.getElementById('inputPhone').value;
+            const location = document.getElementById('inputLocation').value;
+            const linkedin = document.getElementById('inputLinkedin').value;
+            
+            // Update basic fields
+            const cvName = document.getElementById('cvName');
+            const cvTitle = document.getElementById('cvTitle');
+            const cvEmail = document.getElementById('cvEmail');
+            const cvPhone = document.getElementById('cvPhone');
+            const cvLocation = document.getElementById('cvLocation');
+            const cvLinkedin = document.getElementById('cvLinkedin');
+            
+            if (cvName) cvName.textContent = name;
+            if (cvTitle) cvTitle.textContent = title;
+            if (cvEmail) cvEmail.textContent = email;
+            if (cvPhone) cvPhone.textContent = phone;
+            if (cvLocation) cvLocation.textContent = location;
+            if (cvLinkedin) cvLinkedin.textContent = linkedin;
+            
+            // Update color
+            const color = document.getElementById('inputColor').value;
+            changeColor(color);
+            
+            // Update font size
+            const fontSize = document.getElementById('inputFontSize').value;
+            changeFontSize(fontSize);
+        }
+
+        // Change color theme
+        function changeColor(color) {
+            document.documentElement.style.setProperty('--primary', color);
+            
+            // For elite template, update gold color as well
+            if (currentTemplate === 'elite') {
+                // Remove any existing elite color override
+                const existingOverride = document.getElementById('elite-color-override');
+                if (existingOverride) {
+                    existingOverride.remove();
+                }
+                
+                // Create new override styles
+                const style = document.createElement('style');
+                style.id = 'elite-color-override';
+                style.textContent = `
+                    .template-elite .elite-name::after,
+                    .template-elite .elite-section-icon,
+                    .template-elite .elite-section-line,
+                    .template-elite .elite-timeline-item::before,
+                    .template-elite .elite-education-item::before,
+                    .template-elite .elite-skill-category {
+                        background: ${color};
+                    }
+                    .template-elite .elite-contact-item i,
+                    .template-elite .elite-item-date,
+                    .template-elite .elite-education-detail i,
+                    .template-elite .elite-skill-category-title i {
+                        color: ${color};
+                    }
+                    .template-elite .elite-item-date {
+                        border-color: ${color}40;
+                        background: ${color}15;
+                    }
+                    .template-elite .elite-skill-tag {
+                        border-color: ${color}30;
+                    }
+                    .template-elite .elite-skill-tag:hover {
+                        background: ${color}10;
+                        border-color: ${color};
+                    }
+                `;
+                
+                document.head.appendChild(style);
+            }
+        }
+
+        // Change font size
+        function changeFontSize(size) {
+            const cvPaper = document.getElementById('cvPaper');
+            cvPaper.style.fontSize = size + 'px';
+        }
+
+        // Change template
+        function changeTemplate() {
+            if (confirm('Changing templates will reset your content. Continue?')) {
+                document.getElementById('editorContainer').classList.remove('active');
+                document.getElementById('templateSelection').classList.add('active');
+                showToast('Select a new template to continue', 'warning', 'Template selection');
+            }
+        }
+
+        // Add new section
+        function addSection(type) {
+            hasUnsavedChangesFlag = true;
+            
+            if (type === 'experience') {
+                if (currentTemplate === 'elite') {
+                    const newSection = document.createElement('div');
+                    newSection.className = 'elite-timeline-item';
+                    newSection.innerHTML = `
+                        <div class="elite-item-header">
+                            <div>
+                                <div class="elite-item-title" contenteditable="true">Job Title</div>
+                                <div class="elite-item-company" contenteditable="true">Company Name</div>
+                                <div class="elite-item-location" contenteditable="true">Location</div>
+                            </div>
+                            <div class="elite-item-date" contenteditable="true">Year - Year</div>
+                        </div>
+                        <div class="elite-item-description" contenteditable="true">
+                            <ul>
+                                <li>Describe your responsibilities and achievements...</li>
+                                <li>Use bullet points for key accomplishments</li>
+                            </ul>
+                        </div>
+                    `;
+                    
+                    const experienceContainer = document.querySelector('.elite-section:nth-child(2) .elite-content');
+                    if (experienceContainer) {
+                        experienceContainer.appendChild(newSection);
+                        showToast('New experience section added', 'success', 'Section added');
+                    }
+                } else {
+                    const newSection = document.createElement('div');
+                    newSection.className = 'timeline-item';
+                    newSection.innerHTML = `
+                        <div class="item-header">
+                            <div>
+                                <div class="item-title" contenteditable="true">Job Title</div>
+                                <div class="item-subtitle" contenteditable="true">Company Name • Location</div>
+                            </div>
+                            <div class="item-date" contenteditable="true">Year - Year</div>
+                        </div>
+                        <div class="item-description" contenteditable="true">
+                            Describe your responsibilities and achievements...
+                        </div>
+                    `;
+                    
+                    const experienceContainer = document.getElementById('experienceContainer');
+                    if (experienceContainer) {
+                        experienceContainer.appendChild(newSection);
+                        showToast('New experience section added', 'success', 'Section added');
+                    }
+                }
+            } else if (type === 'education') {
+                if (currentTemplate === 'elite') {
+                    const newSection = document.createElement('div');
+                    newSection.className = 'elite-education-item';
+                    newSection.innerHTML = `
+                        <div class="elite-degree" contenteditable="true">Degree</div>
+                        <div class="elite-institution" contenteditable="true">Institution Name</div>
+                        <div class="elite-education-details">
+                            <div class="elite-education-detail">
+                                <i class="fas fa-calendar"></i>
+                                <span contenteditable="true">Year - Year</span>
+                            </div>
+                            <div class="elite-education-detail">
+                                <i class="fas fa-award"></i>
+                                <span contenteditable="true">Honors/Awards</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    const educationContainer = document.querySelector('.elite-section:nth-child(3) .elite-content');
+                    if (educationContainer) {
+                        educationContainer.appendChild(newSection);
+                        showToast('New education section added', 'success', 'Section added');
+                    }
+                } else {
+                    const newSection = document.createElement('div');
+                    newSection.className = 'timeline-item';
+                    newSection.innerHTML = `
+                        <div class="item-header">
+                            <div>
+                                <div class="item-title" contenteditable="true">Degree</div>
+                                <div class="item-subtitle" contenteditable="true">Institution Name</div>
+                            </div>
+                            <div class="item-date" contenteditable="true">Year - Year</div>
+                        </div>
+                    `;
+                    
+                    const educationContainer = document.getElementById('educationContainer');
+                    if (educationContainer) {
+                        educationContainer.appendChild(newSection);
+                        showToast('New education section added', 'success', 'Section added');
+                    }
+                }
+            } else if (type === 'skill') {
+                if (currentTemplate === 'elite') {
+                    const firstSkillList = document.querySelector('.elite-skill-list');
+                    if (firstSkillList) {
+                        const newSkill = document.createElement('span');
+                        newSkill.className = 'elite-skill-tag';
+                        newSkill.setAttribute('contenteditable', 'true');
+                        newSkill.textContent = 'New Skill';
+                        firstSkillList.appendChild(newSkill);
+                        showToast('New skill added', 'success', 'Skill added');
+                    }
+                } else {
+                    const skillsGrid = document.getElementById('skillsContainer');
+                    if (skillsGrid) {
+                        const skillItem = document.createElement('div');
+                        skillItem.className = 'skill-item';
+                        skillItem.innerHTML = `
+                            <div class="skill-name" contenteditable="true">New Skill</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 70%"></div>
+                            </div>
+                        `;
+                        skillsGrid.appendChild(skillItem);
+                        showToast('New skill added', 'success', 'Skill added');
+                    } else {
+                        const altSkillsGrid = document.querySelector('.skills-grid');
+                        if (altSkillsGrid) {
+                            const skillItem = document.createElement('div');
+                            skillItem.className = 'skill-item';
+                            skillItem.innerHTML = `
+                                <div class="skill-name" contenteditable="true">New Skill</div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 70%"></div>
+                                </div>
+                            `;
+                            altSkillsGrid.appendChild(skillItem);
+                            showToast('New skill added', 'success', 'Skill added');
+                        }
+                    }
+                }
+            }
+            
+            // Reattach event listeners
+            attachEditableEventListeners();
+            saveHistoryState();
+            updateProgress();
+        }
+
+        // Save CV to memory
+        function saveCV() {
+            cvData = {
+                template: currentTemplate,
+                html: document.getElementById('cvPaper').innerHTML,
+                inputs: {
+                    name: document.getElementById('inputName').value,
+                    title: document.getElementById('inputTitle').value,
+                    email: document.getElementById('inputEmail').value,
+                    phone: document.getElementById('inputPhone').value,
+                    location: document.getElementById('inputLocation').value,
+                    linkedin: document.getElementById('inputLinkedin').value
+                }
+            };
+            
+            // Update save time
+            lastSaveTime = new Date();
+            updateLastSaveTime();
+            hasUnsavedChangesFlag = false;
+            
+            // Save to localStorage for persistence
+            localStorage.setItem('cvBuilderData', JSON.stringify(cvData));
+            
+            showToast('CV saved successfully!', 'success', 'Auto-saved');
+        }
+
+        // Load CV from memory
+        function loadCV() {
+            const savedData = localStorage.getItem('cvBuilderData');
+            if (savedData) {
+                cvData = JSON.parse(savedData);
+                currentTemplate = cvData.template || 'classic';
+                
+                // Apply template
+                document.getElementById('cvPaper').className = `cv-paper template-${currentTemplate}`;
+                document.getElementById('cvPaper').innerHTML = cvData.html;
+                
+                if (cvData.inputs) {
+                    document.getElementById('inputName').value = cvData.inputs.name;
+                    document.getElementById('inputTitle').value = cvData.inputs.title;
+                    document.getElementById('inputEmail').value = cvData.inputs.email;
+                    document.getElementById('inputPhone').value = cvData.inputs.phone;
+                    document.getElementById('inputLocation').value = cvData.inputs.location;
+                    document.getElementById('inputLinkedin').value = cvData.inputs.linkedin;
+                }
+                
+                // Update CV preview
+                updateCV();
+                attachEditableEventListeners();
+                updateProgress();
+                saveHistoryState();
+                
+                showToast('CV loaded from previous session', 'success', 'Session restored');
+            } else {
+                showToast('No saved CV found. Start by creating a new one.', 'warning', 'No data found');
+            }
+        }
+
+        // Reset CV to default
+        function resetCV() {
+            if (confirm('Are you sure you want to reset your CV? This cannot be undone.')) {
+                // Reset inputs
+                document.getElementById('inputName').value = 'Your Full Name';
+                document.getElementById('inputTitle').value = 'Your Professional Title';
+                document.getElementById('inputEmail').value = 'your.email@example.com';
+                document.getElementById('inputPhone').value = '+1 (555) 123-4567';
+                document.getElementById('inputLocation').value = 'City, Country';
+                document.getElementById('inputLinkedin').value = 'linkedin.com/in/yourprofile';
+                document.getElementById('inputColor').value = '#4F46E5';
+                document.getElementById('inputFontSize').value = '14';
+                document.getElementById('fontSizeValue').textContent = '14px';
+                
+                // Reset to classic template
+                currentTemplate = 'classic';
+                const cvPaper = document.getElementById('cvPaper');
+                cvPaper.className = 'cv-paper template-classic';
+                cvPaper.innerHTML = `
+                    <div class="cv-header">
+                        <h1 class="cv-name" contenteditable="true" id="cvName">Your Full Name</h1>
+                        <h2 class="cv-title" contenteditable="true" id="cvTitle">Your Professional Title</h2>
+                        
+                        <div class="cv-contact">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span contenteditable="true" id="cvEmail">your.email@example.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span contenteditable="true" id="cvPhone">+1 (555) 123-4567</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span contenteditable="true" id="cvLocation">City, Country</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-linkedin"></i>
+                                <span contenteditable="true" id="cvLinkedin">linkedin.com/in/yourprofile</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="cv-body">
+                        <div class="cv-section">
+                            <h3 class="section-title">Professional Summary</h3>
+                            <div class="section-content" contenteditable="true" id="cvSummary">
+                                Results-driven professional with extensive experience in delivering high-impact solutions. Proven track record of exceeding targets and driving business growth. Excellent communicator and collaborative team player with strong analytical skills.
+                            </div>
+                        </div>
+                        
+                        <div class="cv-section">
+                            <h3 class="section-title">Work Experience</h3>
+                            <div class="section-content" id="experienceContainer">
+                                <div class="timeline-item">
+                                    <div class="item-header">
+                                        <div>
+                                            <div class="item-title" contenteditable="true">Senior Software Engineer</div>
+                                            <div class="item-subtitle" contenteditable="true">Tech Company Inc. • San Francisco, CA</div>
+                                        </div>
+                                        <div class="item-date" contenteditable="true">2020 - Present</div>
+                                    </div>
+                                    <div class="item-description" contenteditable="true">
+                                        Led development of cloud-based applications serving 100K+ users. Mentored junior developers and established coding standards. Improved system performance by 40% through optimization initiatives.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cv-section">
+                            <h3 class="section-title">Education</h3>
+                            <div class="section-content" id="educationContainer">
+                                <div class="timeline-item">
+                                    <div class="item-header">
+                                        <div>
+                                            <div class="item-title" contenteditable="true">Bachelor of Science in Computer Science</div>
+                                            <div class="item-subtitle" contenteditable="true">University Name • City, State</div>
+                                        </div>
+                                        <div class="item-date" contenteditable="true">2013 - 2017</div>
+                                    </div>
+                                    <div class="item-description" contenteditable="true">
+                                        Graduated with honors. Relevant coursework: Data Structures, Algorithms, Software Engineering, Database Systems.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cv-section">
+                            <h3 class="section-title">Technical Skills</h3>
+                            <div class="section-content">
+                                <div class="skills-grid" id="skillsContainer">
+                                    <div class="skill-item">
+                                        <div class="skill-name" contenteditable="true">JavaScript/TypeScript</div>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" style="width: 90%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="skill-item">
+                                        <div class="skill-name" contenteditable="true">React & Node.js</div>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" style="width: 85%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="skill-item">
+                                        <div class="skill-name" contenteditable="true">Python & Django</div>
+                                        <div class="skill-bar">
+                                            <div class="skill-progress" style="width: 80%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Update everything
+                updateCV();
+                attachEditableEventListeners();
+                updateProgress();
+                saveHistoryState();
+                
+                // Clear localStorage
+                localStorage.removeItem('cvBuilderData');
+                
+                showToast('CV has been reset to default', 'success', 'Reset complete');
+            }
+        }
+
+        // Export CV
+        function exportCV() {
+            window.print();
+            showToast('Use the print dialog to save as PDF', 'info', 'Export CV');
+        }
+
+        // Mobile Features
+        function initMobileFeatures() {
+            isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                document.body.classList.add('mobile-device');
+                
+                // Add mobile-specific event listeners
+                document.addEventListener('touchstart', handleTouchStart, { passive: true });
+                document.addEventListener('touchend', handleTouchEnd, { passive: true });
+                
+                // Prevent zoom on double tap
+                let lastTouchEnd = 0;
+                document.addEventListener('touchend', function(event) {
+                    const now = Date.now();
+                    if (now - lastTouchEnd <= 300) {
+                        event.preventDefault();
+                    }
+                    lastTouchEnd = now;
+                }, false);
+                
+                // Show mobile toolbar in editor
+                if (document.getElementById('editorContainer').classList.contains('active')) {
+                    document.getElementById('mobileToolbar').style.display = 'flex';
+                    document.getElementById('mobileFab').style.display = 'flex';
+                }
+            }
+        }
+        
+        function handleTouchStart(e) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }
+        
+        function handleTouchEnd(e) {
+            if (!touchStartX || !touchStartY) return;
+            
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            
+            const diffX = touchStartX - touchEndX;
+            const diffY = touchStartY - touchEndY;
+            
+            // Only consider horizontal swipes with minimal vertical movement
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                if (diffX > 0) {
+                    // Swipe left - navigate forward
+                    showToast('Try swiping right to go back', 'info', 'Swipe Navigation');
+                } else {
+                    // Swipe right - navigate back
+                    showToast('Try swiping left to go forward', 'info', 'Swipe Navigation');
+                }
+            }
+        }
+        
+        function showMobileTips() {
+            document.getElementById('mobileTips').style.display = 'flex';
+        }
+        
+        function closeMobileTips() {
+            document.getElementById('mobileTips').style.display = 'none';
+        }
+        
+        function toggleMobileFab() {
+            const fab = document.getElementById('mobileFab');
+            const icon = document.getElementById('fabIcon');
+            const menu = document.getElementById('mobileMenu');
+            
+            if (fabMenuOpen) {
+                // Close menu
+                fab.style.background = 'var(--primary)';
+                icon.className = 'fas fa-plus';
+                menu.style.display = 'none';
+                fabMenuOpen = false;
+            } else {
+                // Open menu
+                fab.style.background = 'var(--danger)';
+                icon.className = 'fas fa-times';
+                menu.style.display = 'flex';
+                fabMenuOpen = true;
+            }
+        }
+        
+        function closeMobileMenu() {
+            document.getElementById('mobileMenu').style.display = 'none';
+            const fab = document.getElementById('mobileFab');
+            const icon = document.getElementById('fabIcon');
+            fab.style.background = 'var(--primary)';
+            icon.className = 'fas fa-plus';
+            fabMenuOpen = false;
+        }
+        
+        function mobileToolbarAction(action) {
+            switch(action) {
+                case 'undo':
+                    undo();
+                    break;
+                case 'redo':
+                    redo();
+                    break;
+                case 'save':
+                    saveCV();
+                    break;
+                case 'export':
+                    exportCV();
+                    break;
+                case 'menu':
+                    toggleMobileFab();
+                    break;
+            }
+            
+            // Add active state to button
+            const buttons = document.querySelectorAll('.mobile-toolbar-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            // Remove active state after 300ms
+            setTimeout(() => {
+                event.currentTarget.classList.remove('active');
+            }, 300);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key.toLowerCase()) {
+                    case 's':
+                        e.preventDefault();
+                        saveCV();
+                        break;
+                    case 'z':
+                        e.preventDefault();
+                        if (e.shiftKey) {
+                            redo();
+                        } else {
+                            undo();
+                        }
+                        break;
+                    case 'y':
+                        e.preventDefault();
+                        redo();
+                        break;
+                    case 'p':
+                        e.preventDefault();
+                        window.print();
+                        break;
+                }
+            }
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const savedData = localStorage.getItem('cvBuilderData');
+                if (savedData) {
+                    showToast('Previous session found. Click "Load Draft" to restore.', 'info', 'Welcome back!');
+                }
+            }, 1000);
+            
+            updateProgress();
+            updateLastSaveTime();
+            attachEditableEventListeners();
+            initMobileFeatures();
+        });
+
+        // Handle window resize for mobile adjustments
+        window.addEventListener('resize', function() {
+            const cvPaper = document.getElementById('cvPaper');
+            if (cvPaper && window.innerWidth <= 768) {
+                cvPaper.style.transform = 'scale(0.95)';
+                cvPaper.style.transformOrigin = 'top center';
+            } else if (cvPaper) {
+                cvPaper.style.transform = 'none';
+            }
+            
+            // Update mobile detection
+            isMobile = window.innerWidth <= 768;
+            if (isMobile) {
+                document.body.classList.add('mobile-device');
+            } else {
+                document.body.classList.remove('mobile-device');
+            }
+        });
+    </script>
+</body>
+</html>

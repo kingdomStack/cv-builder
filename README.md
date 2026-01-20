@@ -44,8 +44,10 @@ Create a stunning resume in minutes with beautiful templates. No signup required
 - `Ctrl+P` - Print/Export PDF
 
 ## 📄 Project Structure
+```
 cv-builder/
-├── index.html  # Main application
-├── style.css  # All styles
-├── script.js  # Application logic
-└── README.md  # This file
+├── index.html   # Main application (form + CV preview)
+├── style.css    # Styles and layout
+├── script.js    # Application logic
+└── README.md    # Documentation   
+```
